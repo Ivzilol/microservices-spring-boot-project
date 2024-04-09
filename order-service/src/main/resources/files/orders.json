@@ -1,0 +1,20 @@
+[
+  {
+    "orderLineItemsDTOList": [
+      {
+        "skuCode": "pie_1",
+        "price": 10.99,
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "orderLineItemsDTOList": [
+      {
+        "skuCode": "sweet_1",
+        "price": 14.69,
+        "quantity": 1
+      }
+    ]
+  }
+]
