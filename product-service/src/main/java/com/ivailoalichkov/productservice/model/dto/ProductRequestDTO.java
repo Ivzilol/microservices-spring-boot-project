@@ -16,5 +16,6 @@ public class ProductRequestDTO {
     private String name;
 
     private String description;
+
     private BigDecimal price;
 }
