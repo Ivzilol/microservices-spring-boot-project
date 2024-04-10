@@ -18,4 +18,5 @@ public class ProductRequestDTO {
     private String description;
 
     private BigDecimal price;
+
 }
