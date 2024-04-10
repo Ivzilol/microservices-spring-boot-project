@@ -21,4 +21,5 @@ public class ProductResponseDTO {
     private String description;
 
     private BigDecimal price;
+
 }
