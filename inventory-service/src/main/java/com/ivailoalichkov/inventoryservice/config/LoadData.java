@@ -3,7 +3,6 @@ package com.ivailoalichkov.inventoryservice.config;
 import com.ivailoalichkov.inventoryservice.model.Inventory;
 import com.ivailoalichkov.inventoryservice.repository.InventoryRepository;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -16,7 +15,7 @@ public class LoadData implements CommandLineRunner{
     }
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         if (inventoryRepository.count() == 0) {
 
             Inventory inventory = new Inventory();
