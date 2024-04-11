@@ -1,5 +1,6 @@
 package com.ivayloalichkov.orderservice.service;
 
+import com.ivayloalichkov.orderservice.model.dto.InventoryResponseDTO;
 import com.ivayloalichkov.orderservice.model.dto.OrderLineItemsDTO;
 import com.ivayloalichkov.orderservice.model.dto.OrderRequestDTO;
 import com.ivayloalichkov.orderservice.model.entity.Order;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -37,13 +39,16 @@ public class OrderService {
                 .map(OrderLineItems::getSkuCode)
                 .toList();
         //check if the item is available
-        Boolean result =webClient.get()
+        InventoryResponseDTO[] inventoryResponsesArray =webClient.get()
                 .uri("http://localhost:8082/api/inventory",
                         uriBuilder -> uriBuilder.queryParam("skuCode", skuCodes).build())
                 .retrieve()
-                .bodyToMono(Boolean.class)
+                .bodyToMono(InventoryResponseDTO[].class)
                 .block();
-        if (Boolean.TRUE.equals(result)) {
+        boolean allProductsInStock =
+                Arrays.stream(inventoryResponsesArray)
+                        .allMatch(InventoryResponseDTO::getIsInStock);
+        if (Boolean.TRUE.equals(allProductsInStock)) {
             this.orderRepository.save(order);
         } else {
             throw new IllegalArgumentException("Product in not available!");
