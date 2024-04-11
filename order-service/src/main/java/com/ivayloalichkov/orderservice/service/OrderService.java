@@ -32,21 +32,25 @@ public class OrderService {
                 .stream()
                 .map(this::mapToDto).toList();
         order.setOrderLineItemsList(orderLineItems);
+        List<String> skuCodes = order.getOrderLineItemsList()
+                .stream()
+                .map(OrderLineItems::getSkuCode)
+                .toList();
         //check if the item is available
-        if (checkIsProductAvailable()) {
+        Boolean result =webClient.get()
+                .uri("http://localhost:8082/api/inventory",
+                        uriBuilder -> uriBuilder.queryParam("skuCode", skuCodes).build())
+                .retrieve()
+                .bodyToMono(Boolean.class)
+                .block();
+        if (Boolean.TRUE.equals(result)) {
             this.orderRepository.save(order);
         } else {
             throw new IllegalArgumentException("Product in not available!");
         }
     }
 
-    private Boolean checkIsProductAvailable() {
-        return webClient.get()
-                .uri("http://localhost:8082/api/inventory")
-                .retrieve()
-                .bodyToMono(Boolean.class)
-                .block();
-    }
+
 
     private OrderLineItems mapToDto(OrderLineItemsDTO orderLineItemsDTO) {
         OrderLineItems orderLineItems = new OrderLineItems();

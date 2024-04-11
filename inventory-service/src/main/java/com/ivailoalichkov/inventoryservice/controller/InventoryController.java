@@ -1,8 +1,11 @@
 package com.ivailoalichkov.inventoryservice.controller;
 
+import com.ivailoalichkov.inventoryservice.model.dto.InventoryResponseDTO;
 import com.ivailoalichkov.inventoryservice.service.InventoryService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/inventory")
@@ -14,9 +17,9 @@ public class InventoryController {
         this.inventoryService = inventoryService;
     }
 
-    @GetMapping("/{sku-code}")
+    @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public boolean isInStock(@PathVariable("sku-code") String skuCode) {
+    public List<InventoryResponseDTO> isInStock(@RequestParam List<String> skuCode) {
         return this.inventoryService.isInStock(skuCode);
     }
 }

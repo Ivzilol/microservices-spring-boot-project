@@ -1,8 +1,11 @@
 package com.ivailoalichkov.inventoryservice.service;
 
+import com.ivailoalichkov.inventoryservice.model.dto.InventoryResponseDTO;
 import com.ivailoalichkov.inventoryservice.repository.InventoryRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class InventoryService {
@@ -14,7 +17,14 @@ public class InventoryService {
     }
 
     @Transactional(readOnly = true)
-    public boolean isInStock(String skuCode) {
-        return this.inventoryRepository.findBySkuCode(skuCode).isPresent();
+    public List<InventoryResponseDTO> isInStock(List<String> skuCode) {
+        return this.inventoryRepository.findBySkuCodeIn(skuCode).stream()
+                .map(inventory ->
+                    InventoryResponseDTO.builder()
+                            .skuCode(inventory.getSkuCode())
+                            .isInStock(inventory.getQuantity() > 0)
+                            .build()
+                )
+                .toList();
     }
 }
