@@ -20,13 +20,14 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
 
-    private static final String INVENTORY_URL = "http://localhost:8082/api/inventory";
+    private static final String INVENTORY_URL = "http://inventory-service/api/inventory";
 
-    private final WebClient webClient;
+    private final WebClient.Builder webClientBuilder;
 
-    public OrderService(OrderRepository orderRepository, WebClient webClient) {
+    public OrderService(OrderRepository orderRepository, WebClient.Builder webClientBuilder) {
         this.orderRepository = orderRepository;
-        this.webClient = webClient;
+
+        this.webClientBuilder = webClientBuilder;
     }
 
     public void placeOrder(OrderRequestDTO orderRequestDTO) {
@@ -49,7 +50,7 @@ public class OrderService {
                 .stream()
                 .map(OrderLineItems::getSkuCode)
                 .toList();
-        InventoryResponseDTO[] inventoryResponsesArray = webClient.get()
+        InventoryResponseDTO[] inventoryResponsesArray = webClientBuilder.build().get()
                 .uri(INVENTORY_URL, uriBuilder ->
                         uriBuilder.queryParam("skuCode", skuCodes).build())
                 .retrieve()
