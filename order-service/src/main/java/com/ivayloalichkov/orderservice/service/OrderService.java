@@ -20,6 +20,8 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
 
+    private static final String INVENTORY_URL = "http://localhost:8082/api/inventory";
+
     private final WebClient webClient;
 
     public OrderService(OrderRepository orderRepository, WebClient webClient) {
@@ -34,20 +36,7 @@ public class OrderService {
                 .stream()
                 .map(this::mapToDto).toList();
         order.setOrderLineItemsList(orderLineItems);
-        List<String> skuCodes = order.getOrderLineItemsList()
-                .stream()
-                .map(OrderLineItems::getSkuCode)
-                .toList();
-        //check if the item is available
-        InventoryResponseDTO[] inventoryResponsesArray =webClient.get()
-                .uri("http://localhost:8082/api/inventory",
-                        uriBuilder -> uriBuilder.queryParam("skuCode", skuCodes).build())
-                .retrieve()
-                .bodyToMono(InventoryResponseDTO[].class)
-                .block();
-        boolean allProductsInStock =
-                Arrays.stream(inventoryResponsesArray)
-                        .allMatch(InventoryResponseDTO::getIsInStock);
+        boolean allProductsInStock = isAllProductsInStock(order);
         if (Boolean.TRUE.equals(allProductsInStock)) {
             this.orderRepository.save(order);
         } else {
@@ -55,6 +44,20 @@ public class OrderService {
         }
     }
 
+    private boolean isAllProductsInStock(Order order) {
+        List<String> skuCodes = order.getOrderLineItemsList()
+                .stream()
+                .map(OrderLineItems::getSkuCode)
+                .toList();
+        InventoryResponseDTO[] inventoryResponsesArray = webClient.get()
+                .uri(INVENTORY_URL, uriBuilder ->
+                        uriBuilder.queryParam("skuCode", skuCodes).build())
+                .retrieve()
+                .bodyToMono(InventoryResponseDTO[].class)
+                .block();
+        return Arrays.stream(inventoryResponsesArray)
+                .allMatch(InventoryResponseDTO::getIsInStock);
+    }
 
 
     private OrderLineItems mapToDto(OrderLineItemsDTO orderLineItemsDTO) {
