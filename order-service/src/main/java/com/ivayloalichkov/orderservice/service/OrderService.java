@@ -30,7 +30,7 @@ public class OrderService {
         this.webClientBuilder = webClientBuilder;
     }
 
-    public void placeOrder(OrderRequestDTO orderRequestDTO) {
+    public String placeOrder(OrderRequestDTO orderRequestDTO) {
         Order order = new Order();
         order.setOrderNumber(UUID.randomUUID().toString());
         List<OrderLineItems> orderLineItems = orderRequestDTO.getOrderLineItemsDTOList()
@@ -40,6 +40,7 @@ public class OrderService {
         boolean allProductsInStock = isAllProductsInStock(order);
         if (Boolean.TRUE.equals(allProductsInStock)) {
             this.orderRepository.save(order);
+            return "Order Placed Successfully";
         } else {
             throw new IllegalArgumentException("Product in not available!");
         }
