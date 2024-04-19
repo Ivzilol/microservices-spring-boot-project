@@ -44,7 +44,9 @@ public class OrderService {
         boolean allProductsInStock = isAllProductsInStock(order);
         if (Boolean.TRUE.equals(allProductsInStock)) {
             this.orderRepository.save(order);
-            kafkaTemplate.send("notificationTopic", new OrderPlacedEvent(order.getOrderNumber()));
+            OrderPlacedEvent orderPlacedEvent = new OrderPlacedEvent();
+            orderPlacedEvent.setOrderNumber(order.getOrderNumber());
+            kafkaTemplate.send("notificationTopic", orderPlacedEvent);
             return "Order Placed Successfully";
         } else {
             throw new IllegalArgumentException("Product in not available!");
