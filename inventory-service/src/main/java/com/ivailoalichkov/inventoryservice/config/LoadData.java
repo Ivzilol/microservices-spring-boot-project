@@ -17,7 +17,6 @@ public class LoadData implements CommandLineRunner{
     @Override
     public void run(String... args) {
         if (inventoryRepository.count() == 0) {
-
             Inventory inventory = new Inventory();
             inventory.setSkuCode("pie_1");
             inventory.setQuantity(100);
