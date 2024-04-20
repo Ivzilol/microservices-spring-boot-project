@@ -20,7 +20,6 @@ public class LoadData implements CommandLineRunner{
             Inventory inventory = new Inventory();
             inventory.setSkuCode("pie_1");
             inventory.setQuantity(100);
-
             Inventory inventory2 = new Inventory();
             inventory2.setSkuCode("sweet_1");
             inventory2.setQuantity(0);
