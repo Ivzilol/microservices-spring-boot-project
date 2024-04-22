@@ -12,6 +12,7 @@ import java.util.List;
 @Service
 @Slf4j
 public class ProductService {
+
     private final ProductRepository productRepository;
     public ProductService(ProductRepository productRepository) {
         this.productRepository = productRepository;
