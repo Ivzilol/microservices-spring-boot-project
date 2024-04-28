@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class LoadData implements CommandLineRunner{
-
     private final InventoryRepository inventoryRepository;
 
     public LoadData(InventoryRepository inventoryRepository) {
