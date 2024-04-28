@@ -8,11 +8,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class LoadData implements CommandLineRunner{
     private final InventoryRepository inventoryRepository;
-
     public LoadData(InventoryRepository inventoryRepository) {
         this.inventoryRepository = inventoryRepository;
     }
-
     @Override
     public void run(String... args) {
         if (inventoryRepository.count() == 0) {
