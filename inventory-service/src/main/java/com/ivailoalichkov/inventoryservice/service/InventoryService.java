@@ -15,7 +15,6 @@ public class InventoryService {
     public InventoryService(InventoryRepository inventoryRepository) {
         this.inventoryRepository = inventoryRepository;
     }
-
     @Transactional(readOnly = true)
     public List<InventoryResponseDTO> isInStock(List<String> skuCode) {
         return this.inventoryRepository.findBySkuCodeIn(skuCode).stream()
