@@ -11,7 +11,6 @@ import java.util.List;
 @RequestMapping("/api/inventory")
 public class InventoryController {
     private final InventoryService inventoryService;
-
     public InventoryController(InventoryService inventoryService) {
         this.inventoryService = inventoryService;
     }
