@@ -11,7 +11,6 @@ import java.util.List;
 @Service
 @Slf4j
 public class InventoryService {
-
     private final InventoryRepository inventoryRepository;
     public InventoryService(InventoryRepository inventoryRepository) {
         this.inventoryRepository = inventoryRepository;
