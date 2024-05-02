@@ -20,7 +20,6 @@ public class OrderController {
         this.orderService = orderService;
     }
 
-
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @CircuitBreaker(name = "inventory", fallbackMethod = "fallbackMethod")
