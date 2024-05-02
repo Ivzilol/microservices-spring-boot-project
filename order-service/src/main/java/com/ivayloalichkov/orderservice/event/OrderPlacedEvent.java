@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class OrderPlacedEvent {
 
-
     private String orderNumber;
 
 }
