@@ -18,6 +18,7 @@ public class ProductService {
     public ProductService(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
+
     public void createProduct(ProductRequestDTO productRequestDTO){
         Product product = Product.builder()
                 .name(productRequestDTO.getName())
