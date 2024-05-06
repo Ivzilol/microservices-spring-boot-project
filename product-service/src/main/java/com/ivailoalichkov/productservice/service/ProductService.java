@@ -29,7 +29,6 @@ public class ProductService {
         List<Product> products = productRepository.findAll();
         return products.stream().map(this::mapToProductResponseDTO).toList();
     }
-
     private ProductResponseDTO mapToProductResponseDTO(Product product) {
         return ProductResponseDTO.builder()
                 .id(product.getId())
