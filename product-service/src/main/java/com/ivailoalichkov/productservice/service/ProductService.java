@@ -28,6 +28,7 @@ public class ProductService {
         this.productRepository.save(product);
         log.info("Product {} is saved", product.getId());
     }
+
     public List<ProductResponseDTO> getAllProducts() {
         List<Product> products = productRepository.findAll();
         return products.stream().map(this::mapToProductResponseDTO).toList();
