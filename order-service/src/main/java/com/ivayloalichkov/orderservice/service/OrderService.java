@@ -20,7 +20,6 @@ import java.util.UUID;
 @Transactional
 public class OrderService {
 
-
     private final OrderRepository orderRepository;
 
     private static final String INVENTORY_URL = "http://inventory-service/api/inventory";
