@@ -56,6 +56,7 @@ public class OrderService {
         }
     }
 
+
     private boolean isAllProductsInStock(Order order) {
         List<String> skuCodes = order.getOrderLineItemsList()
                 .stream()
