@@ -12,5 +12,4 @@ import java.util.List;
 public class OrderRequestDTO {
 
     private List<OrderLineItemsDTO> orderLineItemsDTOList;
-
 }
