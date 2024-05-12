@@ -37,7 +37,6 @@ public class OrderService {
                 .map(this::mapToDto).toList();
         order.setOrderLineItemsList(orderLineItems);
         boolean allProductsInStock = isAllProductsInStock(order);
-
         if (Boolean.TRUE.equals(allProductsInStock)) {
             this.orderRepository.save(order);
             OrderPlacedEvent orderPlacedEvent = new OrderPlacedEvent();
