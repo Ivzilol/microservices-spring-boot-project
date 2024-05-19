@@ -53,6 +53,7 @@ public class OrderService {
             throw new IllegalArgumentException("Product in not available!");
         }
     }
+
     private boolean isAllProductsInStock(Order order) {
         List<String> skuCodes = order.getOrderLineItemsList()
                 .stream()
