@@ -59,6 +59,7 @@ public class OrderService {
                 .retrieve()
                 .bodyToMono(InventoryResponseDTO[].class)
                 .block();
+        assert inventoryResponsesArray != null;
         return Arrays.stream(inventoryResponsesArray)
                 .allMatch(InventoryResponseDTO::getIsInStock);
     }
