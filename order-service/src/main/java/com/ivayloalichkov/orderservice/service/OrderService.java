@@ -62,7 +62,6 @@ public class OrderService {
         return Arrays.stream(inventoryResponsesArray)
                 .allMatch(InventoryResponseDTO::getIsInStock);
     }
-
     private OrderLineItems mapToDto(OrderLineItemsDTO orderLineItemsDTO) {
         OrderLineItems orderLineItems = new OrderLineItems();
         orderLineItems.setPrice(orderLineItemsDTO.getPrice());
