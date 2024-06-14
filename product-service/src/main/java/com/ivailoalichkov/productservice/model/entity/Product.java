@@ -26,6 +26,7 @@ public class Product {
 
     private String description;
 
+
     private BigDecimal price;
 
 }
