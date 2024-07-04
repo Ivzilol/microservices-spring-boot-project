@@ -25,6 +25,7 @@ public class OrderService {
     private static final String INVENTORY_URL = "http://inventory-service/api/inventory";
 
     private final WebClient.Builder webClientBuilder;
+
     private final KafkaTemplate<String, OrderPlacedEvent> kafkaTemplate;
 
     public OrderService(OrderRepository orderRepository, WebClient.Builder webClientBuilder, KafkaTemplate<String, OrderPlacedEvent> kafkaTemplate) {
