@@ -33,6 +33,7 @@ public class OrderService {
         this.webClientBuilder = webClientBuilder;
         this.kafkaTemplate = kafkaTemplate;
     }
+
     public String placeOrder(OrderRequestDTO orderRequestDTO) {
         Order order = new Order();
         order.setOrderNumber(UUID.randomUUID().toString());
